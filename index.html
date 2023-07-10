@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Tienda de libros</title>
+</head>
+<body>
+    <div class="contenedor">
+        <aside>
+            <header>
+                <h1 id="home" class="logo">Readshop</h1>
+            </header>
+            <nav>
+                    <ul>
+                        <li>
+                            <button id="catalogo" class="botonMenu"><i class="bi bi-arrow-right-circle-fill"></i>Ver catálogo</button>
+                        </li>
+                        <li>
+                            <button id="novedades" class="botonMenu"><i class="bi bi-arrow-right-circle-fill"></i>Novedades</button>
+                        </li>
+                        <li>
+                            <button id="ofertas" class="botonMenu"><i class="bi bi-arrow-right-circle-fill"></i>Ofertas</button>
+                        </li>
+                        <li>
+                            <button id="botonCarrito"  class="botonCarrito">
+                                <i class="bi bi-cart-fill"></i>Carrito
+                                <span id="cantidadCarrito" class="numerito">0</span>
+                        
+                            </button>
+                        </li>
+                           
+                    </ul>
+
+            </nav>
+            <footer>
+                <p class="textoFooter">© 2023 Readshop</p>
+            </footer>
+            
+
+        </aside>
+        <main>
+            <div class="contenedorDelInputyTituloyRedes">
+                <div class="contenedorDelTitulo">
+                    <h2 class="tituloDelContenedor">CATÁLOGO</h2>
+                </div>
+                <div class="contenedorDelInput">
+                    <input id="buscador" type="search" placeholder="   Ingrese el título del libro">
+                    <button id="botonAtras" class="botonHome">VOLVER</button>
+                </div>
+                <div class="redes">
+                    <i class="bi bi-facebook"></i>
+                    <i class="bi bi-instagram"></i>
+                    <i class="bi bi-whatsapp"></i>
+
+                </div>
+            </div>
+            
+            <div id="contenedorProductos" class="contenedor-Productos">
+
+            </div>
+            <div id="carritoContenedor" class="oculto">
+                <div id="carritoFisico">
+                
+
+                </div>
+
+                <div class="carritoAcciones">
+                    <div class="carritoAccionesIzq">
+                        <button id="vaciarCarrito" class="carritoAccionesVaciar">VACIAR CARRITO</button>
+                    </div>
+                    <div class="carritoAccionesDer">
+                        <button class="carritoAccionesComprar">Finalizar compra</button>
+    
+                    </div>
+    
+                </div> 
+
+            </div>
+          
+        </main>
+    </div>
+
+    <script src="productos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
