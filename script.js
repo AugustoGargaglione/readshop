@@ -19,36 +19,61 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
 crearTarjetas()
 
+llenarCarrito()
+
 
 ////ESCUCHADOR DEL EVENTO DEL BOTÓN CARRITO DEL INDEX/////////
 
-botonCarrito.addEventListener("click", () => {
-    mostrarOcultar()
-    carritoFisico.innerHTML = ""
-    carrito.forEach(libro => {
-    let ContenidoCarrito = document.createElement("div")
-    ContenidoCarrito.className = "tarjeta-carrito"
-    ContenidoCarrito.innerHTML = `
-    <img src= imagenes/${libro.imagen}>
-    <h3>${libro.titulo.toUpperCase()}</h3>
-    <p>Cantidad:${libro.cantidad}
-    <p> $ ${libro.precio}</p>
+
+botonCarrito.addEventListener("click", mostrarOcultar)
+
+////FUNCIÓN PARA LLENAR EL CARRITO/////
+
+
+function llenarCarrito(){
+        
+        carritoFisico.innerHTML = ""
+        carrito.forEach(libro => {
+        let contenidoCarrito = document.createElement("div")
+        contenidoCarrito.className = "tarjeta-carrito"
+        contenidoCarrito.innerHTML = `
+        <img src= imagenes/${libro.imagen}>
+        <h3>${libro.titulo.toUpperCase()}</h3>
+        <p>Cantidad:${libro.cantidad}
+        <p> $ ${libro.precio}</p>
+        <button class="eliminar-producto">❌</button>
     
+        `
+        carritoFisico.append(contenidoCarrito)
 
-    `
-    let botonEliminar = document.createElement("button")
-    botonEliminar.innerText = "❌"
-    botonEliminar.className = "boton-Eliminar"
-    ContenidoCarrito.append(botonEliminar)
-    carritoFisico.append(ContenidoCarrito)
-    console.log(carrito)
+  
+    let eliminarProducto = contenidoCarrito.querySelector(".eliminar-producto")
+    eliminarProducto.addEventListener("click", () => {
+        eliminar(libro.id)
+        
+    
+    })
+  
+
+    })
+
+    
+        
+}
 
 
-})
-})
+////FUNCIÓN PARA ELIMINAR PRODUCTOS////
+function eliminar(id) {
+    let foundID = carrito.find(libro => libro.id === id)
 
+    carrito = carrito.filter(carritoId => {
+        return carritoId !== foundID
+    })
+    carritoContador()
+    llenarCarrito()
+    
+}
    
-
 
 /////FUNCIÓN PARA VER EL CATÁLOGO////
 
@@ -75,17 +100,23 @@ function buscarPorNombre() {
 
 }
 
+
+
 ////BOTÓN HOME////
 
 let botonHome = document.getElementById("home")
 
 botonHome.addEventListener("click", crearTarjetas)
 
+
+
 ///BOTÓN "ATRÁS/////"
 
 let botonAtras = document.getElementById("botonAtras")
 
 botonAtras.addEventListener("click", crearTarjetas)
+
+
 
 ////BOTÓN NOVEDADES////
 
@@ -135,27 +166,12 @@ function crearTarjetas() {
                 cantidad: libro.cantidad,
             })
         }
+        llenarCarrito()
+        carritoContador()
         saveStorage()
 
-        carritoFisico.innerHTML = ""
-        carrito.forEach(libro => {
-        let ContenidoCarrito = document.createElement("div")
-        ContenidoCarrito.className = "tarjeta-carrito"
-        ContenidoCarrito.innerHTML = `
-        <img src= imagenes/${libro.imagen}>
-        <h3>${libro.titulo.toUpperCase()}</h3>
-        <p>Cantidad:${libro.cantidad}
-        <p> $ ${libro.precio}</p>
         
 
-        `
-        let botonEliminar = document.createElement("button")
-        botonEliminar.innerText = "❌"
-        botonEliminar.className = "boton-Eliminar"
-        ContenidoCarrito.append(botonEliminar)
-        carritoFisico.append(ContenidoCarrito)
-        console.log(carrito)
-     })
      })
      } )
   }
@@ -220,26 +236,15 @@ function saveStorage() {
            }
            saveStorage()
    
-           carritoFisico.innerHTML = ""
-           carrito.forEach(libro => {
-           let ContenidoCarrito = document.createElement("div")
-           ContenidoCarrito.className = "tarjeta-carrito"
-           ContenidoCarrito.innerHTML = `
-           <img src= imagenes/${libro.imagen}>
-           <h3>${libro.titulo.toUpperCase()}</h3>
-           <p>Cantidad:${libro.cantidad}
-           <p> $ ${libro.precio}</p>
-           
-   
-           `
-           let botonEliminar = document.createElement("button")
-           botonEliminar.innerText = "❌"
-           botonEliminar.className = "boton-Eliminar"
-           ContenidoCarrito.append(botonEliminar)
-           carritoFisico.append(ContenidoCarrito)
-        })
+           llenarCarrito()
         })
         } )
 
 
     } 
+
+
+    let carritoContador = () => {
+        
+        cantidadCarrito.innerText = carrito.length
+    }
