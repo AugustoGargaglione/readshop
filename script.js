@@ -90,6 +90,10 @@ function eliminar(id) {
     
 }
    
+////EVENTO PARA VACIAR CARRITO///////
+
+vaciarCarrito.addEventListener("click", vaciar)
+
 
 /////FUNCIÓN PARA VER EL CATÁLOGO////
 
@@ -189,6 +193,7 @@ finalizarCompra.addEventListener("click", () => {
         text: '¡Gracias por su compra!',
     
       })
+    vaciar()
 })
 
 
@@ -268,3 +273,12 @@ finalizarCompra.addEventListener("click", () => {
           }).showToast();
     }
     
+    ///FUNCIÓN PARA VACIAR CARRITO////
+
+    function vaciar() {
+        carritoFisico.innerHTML = ""
+        carrito = []
+        carritoContador()
+        localStorage.removeItem("carrito")
+
+    }
