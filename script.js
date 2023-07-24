@@ -13,12 +13,24 @@ let vaciarCarrito = document.getElementById("vaciarCarrito")
 let finalizarCompra = document.getElementById("finalizarCompra")
 
 
-
-
 let carrito = JSON.parse(localStorage.getItem("carrito")) || []
 
+let libros = `./libros.json`
 
-crearTarjetas()
+
+///FUNCIÓN FETCH////
+
+function articulos() {
+    fetch(libros)
+    .then(response => response.json())
+    .then(libros =>{
+        tarjetas(libros)
+    })
+    
+}
+
+
+articulos()
 
 llenarCarrito()
 
@@ -27,6 +39,8 @@ llenarCarrito()
 
 
 botonCarrito.addEventListener("click", mostrarOcultar)
+
+
 
 ////FUNCIÓN PARA LLENAR EL CARRITO/////
 
@@ -80,18 +94,24 @@ function eliminar(id) {
 /////FUNCIÓN PARA VER EL CATÁLOGO////
 
 
-catalogo.addEventListener("click",()=>crearTarjetas())
+catalogo.addEventListener("click",articulos)
 
 
 ////FUNCIÓN PARA VER LAS OFERTAS////
 ofertas.addEventListener("click", CrearOfertas)
 
 function CrearOfertas() {
+    fetch(libros)
+    .then(response => response.json())
+    .then(libros => {
+        let verOfertas = libros.filter(libro => libro.precio < 500)
+        tarjetas(verOfertas)
+    })
+       
+    }
+  
 
-    let verOfertas = libros.filter(libro => libro.precio < 500)
-    tarjetas(verOfertas)
 
-}
 
 ////FUNCIÓN BUSCADOR////
 
@@ -99,8 +119,13 @@ function CrearOfertas() {
 buscador.addEventListener("input", buscarPorNombre)
 
 function buscarPorNombre() {
-   let buscado = libros.filter(libro => libro.titulo.includes(buscador.value))
-   tarjetas(buscado)
+    fetch(libros)
+    .then(response => response.json())
+    .then(libros => {
+        let buscado = libros.filter(libro => libro.titulo.includes(buscador.value))
+        tarjetas(buscado)
+    })
+   
 
 }
 
@@ -110,7 +135,7 @@ function buscarPorNombre() {
 
 let botonHome = document.getElementById("home")
 
-botonHome.addEventListener("click", crearTarjetas)
+botonHome.addEventListener("click", articulos)
 
 
 
@@ -118,7 +143,7 @@ botonHome.addEventListener("click", crearTarjetas)
 
 let botonAtras = document.getElementById("botonAtras")
 
-botonAtras.addEventListener("click", crearTarjetas)
+botonAtras.addEventListener("click", articulos)
 
 
 
@@ -127,60 +152,14 @@ botonAtras.addEventListener("click", crearTarjetas)
 novedades.addEventListener("click", verNovedades)
 
 function verNovedades() {
-    let novedad = libros.filter(libro => libro.año >2019)
-    tarjetas(novedad)
-  
-}
-
-
-
-///FUNCIÓN PARA CREAR LAS TARJETAS AUTOMATICAMENTE EN EL CONTENEDOR////
-
-function crearTarjetas() {
-    contenedor.innerHTML = ""
-    libros.forEach((libro) => {
-        let tarjeta = document.createElement("div")
-        tarjeta.className = "tarjeta"
-        tarjeta.innerHTML = `
-        <h3>${libro.titulo.toUpperCase()}
-        <br><br>${libro.autor.toUpperCase()} </h3>
-        <img src= imagenes/${libro.imagen}>
-        <h3>PRECIO: $${libro.precio}</h3>
-        `
-     contenedor.appendChild(tarjeta)
-     let botonAgregar = document.createElement("button")
-     tarjeta.append(botonAgregar)
-     botonAgregar.innerText = "Agregar al carrito"
-
-
-     botonAgregar.addEventListener("click", () => {
-        let repeat = carrito.some(repetido => repetido.id === libro.id)
-        if (repeat) {
-            carrito.map(articulo => {
-                if(articulo.id === libro.id){
-                    articulo.cantidad++
-                }
-            })
-
-        } else {
-            carrito.push({
-                imagen: libro.imagen,
-                id: libro.id,
-                titulo:libro.titulo,
-                precio: libro.precio,
-                cantidad: libro.cantidad,
-            })
-        }
-        llenarCarrito()
-        carritoContador()
-        alert()
-        saveStorage()
-
-        
-
-     })
-     } )
-  }
+    fetch(libros)
+    .then(response => response.json())
+    .then(libros => {
+        let verNovedades = libros.filter(libro => libro.año > 2019)
+        tarjetas(verNovedades)
+    })
+       
+    }
 
 
   ////FUNCIÓN PARA VER Y OCULTAR EL CARRITO//////
@@ -249,13 +228,14 @@ finalizarCompra.addEventListener("click", () => {
                carrito.push({
                    imagen: libro.imagen,
                    id: libro.id,
-                   titulo:libro.titulo,
+                   titulo: libro.titulo,
                    precio: libro.precio,
                    cantidad: libro.cantidad,
                })
            }
            saveStorage()
-   
+           carritoContador()
+           alert()
            llenarCarrito()
         })
         } )
@@ -280,11 +260,11 @@ finalizarCompra.addEventListener("click", () => {
             close: true,
             gravity: "top",
             position: "right",
-            stopOnFocus: true, // Prevents dismissing of toast on hover
+            stopOnFocus: true, 
             style: {
               background: "linear-gradient(to right, #00b09b, #96c93d)",
             },
-            onClick: function(){} // Callback after click
+            onClick: function(){} 
           }).showToast();
     }
     
