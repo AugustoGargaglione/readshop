@@ -329,6 +329,17 @@ main{
     margin-top: -5px;
 }
 
+.total{
+    font-size: 2rem;
+    color: rgb(191, 52, 20);
+    margin-left: 600px;
+    border-style: double;
+    padding: 5px;
+    background-color: rgb(238, 238, 142);
+    border-radius: 1rem;
+
+}
+
 .numerito{
     background-color: red;
     color: yellow;

@@ -61,8 +61,9 @@ function llenarCarrito(){
 
 
         carritoFisico.append(contenidoCarrito)
-
-  
+        
+        
+        
     let eliminarProducto = contenidoCarrito.querySelector(".eliminar-producto")
     eliminarProducto.addEventListener("click", () => {
         eliminar(libro.id)
@@ -73,7 +74,11 @@ function llenarCarrito(){
 
     })
 
-    
+    let totalCompra = suma()
+        let totalFisico = document.createElement("p")
+        totalFisico.classList = "total"
+        totalFisico.textContent = `Total: $${totalCompra}`     
+        carritoFisico.appendChild(totalFisico)
         
 }
 
@@ -281,5 +286,16 @@ finalizarCompra.addEventListener("click", () => {
         carrito = []
         carritoContador()
         localStorage.removeItem("carrito")
+        llenarCarrito()
 
+    }
+
+    ///FUNCIÓN PARA CALCULAR EL PRECIO TOTAL////
+
+    function suma() {
+        let total = 0
+        carrito.forEach(libro => {
+            total += libro.precio * libro.cantidad
+        })
+        return total
     }
