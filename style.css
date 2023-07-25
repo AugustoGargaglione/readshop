@@ -203,6 +203,10 @@ main{
     border-style: double;
 
 }
+.tarjeta h2{
+    color: rgb(219, 81, 11);
+    
+}
 .tarjeta h3{
     background-color: rgb(252, 142, 32);
     color: rgb(185, 6, 6);

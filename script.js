@@ -86,6 +86,7 @@ function eliminar(id) {
         return carritoId !== foundID
     })
     carritoContador()
+    saveStorage()
     llenarCarrito()
     
 }
@@ -210,7 +211,7 @@ finalizarCompra.addEventListener("click", () => {
         <h3>${libro.titulo.toUpperCase()}
         <br><br>${libro.autor.toUpperCase()} </h3>
         <img src= imagenes/${libro.imagen}>
-        <h3>PRECIO: $${libro.precio}</h3>
+        <h2>PRECIO: $${libro.precio}</h2>
         
         ` 
         contenedor.append(tarjetaDelProducto)
